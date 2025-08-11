@@ -8,7 +8,5 @@ fn main() -> Result<()> {
     .cargo_out_dir("protobuf")
     .run_from_script();
 
-    prost_build::compile_protos(&["../schemas/message.proto"], &["../schemas"])?;
-
     Ok(())
 }
