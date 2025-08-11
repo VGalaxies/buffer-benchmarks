@@ -8,9 +8,11 @@ edition = "2021"
 [dependencies]
 flatbuffers = "25.2.10"
 protobuf = "3.7.2"
+capnp = "0.21"
 
 [build-dependencies]
 protobuf-codegen = "3.7.2"
+capnpc = "0.21"
 
 [dev-dependencies]
 criterion = "0.7.0"
