@@ -17,11 +17,19 @@ func GetRootAsAmpBody(buf []byte, offset flatbuffers.UOffsetT) *AmpBody {
 	return x
 }
 
+func FinishAmpBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsAmpBody(buf []byte, offset flatbuffers.UOffsetT) *AmpBody {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &AmpBody{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedAmpBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *AmpBody) Init(buf []byte, i flatbuffers.UOffsetT) {

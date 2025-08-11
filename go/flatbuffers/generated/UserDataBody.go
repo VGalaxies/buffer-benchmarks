@@ -17,11 +17,19 @@ func GetRootAsUserDataBody(buf []byte, offset flatbuffers.UOffsetT) *UserDataBod
 	return x
 }
 
+func FinishUserDataBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsUserDataBody(buf []byte, offset flatbuffers.UOffsetT) *UserDataBody {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &UserDataBody{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedUserDataBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *UserDataBody) Init(buf []byte, i flatbuffers.UOffsetT) {

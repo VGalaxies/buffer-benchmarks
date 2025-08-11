@@ -17,11 +17,19 @@ func GetRootAsVerificationRemoveBody(buf []byte, offset flatbuffers.UOffsetT) *V
 	return x
 }
 
+func FinishVerificationRemoveBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsVerificationRemoveBody(buf []byte, offset flatbuffers.UOffsetT) *VerificationRemoveBody {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &VerificationRemoveBody{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedVerificationRemoveBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *VerificationRemoveBody) Init(buf []byte, i flatbuffers.UOffsetT) {

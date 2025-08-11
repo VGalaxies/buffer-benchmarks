@@ -17,11 +17,19 @@ func GetRootAsCastAddBody(buf []byte, offset flatbuffers.UOffsetT) *CastAddBody 
 	return x
 }
 
+func FinishCastAddBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsCastAddBody(buf []byte, offset flatbuffers.UOffsetT) *CastAddBody {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &CastAddBody{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedCastAddBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *CastAddBody) Init(buf []byte, i flatbuffers.UOffsetT) {

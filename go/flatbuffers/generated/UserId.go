@@ -17,11 +17,19 @@ func GetRootAsUserId(buf []byte, offset flatbuffers.UOffsetT) *UserId {
 	return x
 }
 
+func FinishUserIdBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsUserId(buf []byte, offset flatbuffers.UOffsetT) *UserId {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &UserId{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedUserIdBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *UserId) Init(buf []byte, i flatbuffers.UOffsetT) {

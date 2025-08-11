@@ -17,11 +17,19 @@ func GetRootAsMessageData(buf []byte, offset flatbuffers.UOffsetT) *MessageData 
 	return x
 }
 
+func FinishMessageDataBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsMessageData(buf []byte, offset flatbuffers.UOffsetT) *MessageData {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &MessageData{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedMessageDataBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *MessageData) Init(buf []byte, i flatbuffers.UOffsetT) {

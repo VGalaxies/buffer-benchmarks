@@ -17,11 +17,19 @@ func GetRootAsReactionBody(buf []byte, offset flatbuffers.UOffsetT) *ReactionBod
 	return x
 }
 
+func FinishReactionBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsReactionBody(buf []byte, offset flatbuffers.UOffsetT) *ReactionBody {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &ReactionBody{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedReactionBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *ReactionBody) Init(buf []byte, i flatbuffers.UOffsetT) {

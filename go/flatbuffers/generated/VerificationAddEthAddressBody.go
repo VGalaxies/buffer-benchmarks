@@ -17,11 +17,19 @@ func GetRootAsVerificationAddEthAddressBody(buf []byte, offset flatbuffers.UOffs
 	return x
 }
 
+func FinishVerificationAddEthAddressBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsVerificationAddEthAddressBody(buf []byte, offset flatbuffers.UOffsetT) *VerificationAddEthAddressBody {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &VerificationAddEthAddressBody{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedVerificationAddEthAddressBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *VerificationAddEthAddressBody) Init(buf []byte, i flatbuffers.UOffsetT) {

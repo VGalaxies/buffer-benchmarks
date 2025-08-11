@@ -1,4 +1,4 @@
-//go:generate capnp compile -I$GOPATH/src/capnproto.org/go/capnp/std -ogo:generated --src-prefix=../../schemas ../../schemas/message.capnp
+//go:generate sh -c "capnp compile -I $(go list -f '{{.Dir}}' -m capnproto.org/go/capnp/v3)/std -ogo:generated --src-prefix=../../schemas ../../schemas/message.capnp"
 
 package capnproto
 
@@ -11,9 +11,7 @@ import (
 )
 
 func Encode(packed bool) []byte {
-	arena := capnp.SingleSegment(nil)
-
-	msg, seg, err := capnp.NewMessage(arena)
+	msg, seg, err := capnp.NewMessage(capnp.SingleSegment(nil))
 	if err != nil {
 		log.Fatalln("Failed to construct capnp Message:", err)
 	}
@@ -51,7 +49,7 @@ func Encode(packed bool) []byte {
 		log.Fatalln("Failed to encode MessageData:", err)
 	}
 
-	msg2, seg2, err := capnp.NewMessage(arena)
+	msg2, seg2, err := capnp.NewMessage(capnp.SingleSegment(nil))
 	if err != nil {
 		log.Fatalln("Failed to construct capnp Message:", err)
 	}

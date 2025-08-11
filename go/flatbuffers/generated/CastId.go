@@ -17,11 +17,19 @@ func GetRootAsCastId(buf []byte, offset flatbuffers.UOffsetT) *CastId {
 	return x
 }
 
+func FinishCastIdBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsCastId(buf []byte, offset flatbuffers.UOffsetT) *CastId {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &CastId{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedCastIdBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *CastId) Init(buf []byte, i flatbuffers.UOffsetT) {

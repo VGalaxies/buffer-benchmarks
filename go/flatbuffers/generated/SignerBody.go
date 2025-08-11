@@ -17,11 +17,19 @@ func GetRootAsSignerBody(buf []byte, offset flatbuffers.UOffsetT) *SignerBody {
 	return x
 }
 
+func FinishSignerBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.Finish(offset)
+}
+
 func GetSizePrefixedRootAsSignerBody(buf []byte, offset flatbuffers.UOffsetT) *SignerBody {
 	n := flatbuffers.GetUOffsetT(buf[offset+flatbuffers.SizeUint32:])
 	x := &SignerBody{}
 	x.Init(buf, n+offset+flatbuffers.SizeUint32)
 	return x
+}
+
+func FinishSizePrefixedSignerBodyBuffer(builder *flatbuffers.Builder, offset flatbuffers.UOffsetT) {
+	builder.FinishSizePrefixed(offset)
 }
 
 func (rcv *SignerBody) Init(buf []byte, i flatbuffers.UOffsetT) {
