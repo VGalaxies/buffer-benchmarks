@@ -70,10 +70,10 @@ func Decode(buf []byte) {
 	bodyTable := new(flatbuffers.Table)
 	if !md.Body(bodyTable) {
 		log.Fatalln("Cannot decode body")
-		castAddBody := new(generated.CastAddBody)
-		castAddBody.Init(bodyTable.Bytes, bodyTable.Pos)
-		if string(castAddBody.Text()) != constants.SampleText {
-			log.Fatalln("Unexpected decoded text")
-		}
+	}
+	castAddBody := new(generated.CastAddBody)
+	castAddBody.Init(bodyTable.Bytes, bodyTable.Pos)
+	if string(castAddBody.Text()) != constants.SampleText {
+		log.Fatalln("Unexpected decoded text")
 	}
 }
