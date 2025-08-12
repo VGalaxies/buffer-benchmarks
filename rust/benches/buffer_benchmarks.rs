@@ -1,29 +1,49 @@
-use criterion::{criterion_group, criterion_main, Criterion};
-
 use buffer_benchmarks::{capnproto, flatbuffers, protobuf};
+use iai_callgrind::{library_benchmark, library_benchmark_group, main};
+use std::hint::black_box;
 
-fn bench_protobuf(c: &mut Criterion) {
-    c.bench_function("encode_protobuf", |b| b.iter(|| protobuf::encode()));
+#[library_benchmark]
+fn encode_protobuf() {
+    black_box(protobuf::encode());
+}
+
+#[library_benchmark]
+fn decode_protobuf() {
     let buf = protobuf::encode();
-    println!("Wire format size (bytes) = {}", buf.len());
-    c.bench_function("decode_protobuf", |b| b.iter(|| protobuf::decode(&buf)));
+    black_box(protobuf::decode(&buf));
 }
 
-fn bench_flatbuffers(c: &mut Criterion) {
-    c.bench_function("encode_flatbuffers", |b| b.iter(|| flatbuffers::encode()));
+#[library_benchmark]
+fn encode_flatbuffers() {
+    black_box(flatbuffers::encode());
+}
+
+#[library_benchmark]
+fn decode_flatbuffers() {
     let buf = flatbuffers::encode();
-    println!("Wire format size (bytes) = {}", buf.len());
-    c.bench_function("decode_flatbuffers", |b| {
-        b.iter(|| flatbuffers::decode(&buf))
-    });
+    black_box(flatbuffers::decode(&buf));
 }
 
-fn bench_capnproto(c: &mut Criterion) {
-    c.bench_function("encode_capnproto", |b| b.iter(|| capnproto::encode()));
+#[library_benchmark]
+fn encode_capnproto() {
+    black_box(capnproto::encode());
+}
+
+#[library_benchmark]
+fn decode_capnproto() {
     let buf = capnproto::encode();
-    println!("Wire format size (bytes) = {}", buf.len());
-    c.bench_function("decode_capnproto", |b| b.iter(|| capnproto::decode(&buf)));
+    black_box(capnproto::decode(&buf));
 }
 
-criterion_group!(benches, bench_protobuf, bench_flatbuffers, bench_capnproto);
-criterion_main!(benches);
+library_benchmark_group!(
+    name = serialization_benches;
+    benchmarks =
+        encode_protobuf,
+        decode_protobuf,
+        encode_flatbuffers,
+        decode_flatbuffers,
+        encode_capnproto,
+        decode_capnproto
+);
+
+main!(library_benchmark_groups = serialization_benches);

@@ -16,6 +16,7 @@ capnpc = "0.21"
 
 [dev-dependencies]
 criterion = "0.7.0"
+iai-callgrind = "0.16.1"
 
 [[bench]]
 name = "buffer_benchmarks"
